@@ -10,6 +10,7 @@ O Codeigniter 4 necessita da extensão php-intl e php-mbstring. Verificar se est
 
 Passos
 - baixe o repositório para um local válido (Linux Ubuntu /var/www/html/)
+- execute o $ composer install
 - Copie env para.env e adapte para o seu aplicativo, especificamente as configurações de banco de dados.
 ```
 Para MySQL:

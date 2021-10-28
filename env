@@ -40,16 +40,16 @@ app.version = '0.0.1'
 #--------------------------------------------------------------------
 
 # para uso do MySQL
-database.default.hostname = localhost
-database.default.database = database_test
-database.default.username = root
-database.default.password = root
-database.default.DBDriver = MySQLi
+# database.default.hostname = localhost
+# database.default.database = database_test
+# database.default.username = root
+# database.default.password = root
+# database.default.DBDriver = MySQLi
 # database.default.DBPrefix =
 
 # para uso do sqLite
-# database.default.database = ../writable/database.db
-# database.default.DBDriver = SQLite3
+database.default.database = ../writable/database.db
+database.default.DBDriver = SQLite3
 # database.default.DBPrefix =
 
 # database.tests.hostname = localhost
