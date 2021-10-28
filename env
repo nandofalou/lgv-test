@@ -14,12 +14,14 @@
 # ENVIRONMENT
 #--------------------------------------------------------------------
 
-# CI_ENVIRONMENT = production
+# ambiente. opções: production  ou  development
+CI_ENVIRONMENT = production
 
 #--------------------------------------------------------------------
 # APP
 #--------------------------------------------------------------------
 
+app.version = '0.0.1'
 # app.baseURL = ''
 # app.forceGlobalSecureRequests = false
 
@@ -37,11 +39,17 @@
 # DATABASE
 #--------------------------------------------------------------------
 
-# database.default.hostname = localhost
-# database.default.database = ci4
-# database.default.username = root
-# database.default.password = root
-# database.default.DBDriver = MySQLi
+# para uso do MySQL
+database.default.hostname = localhost
+database.default.database = database_test
+database.default.username = root
+database.default.password = root
+database.default.DBDriver = MySQLi
+# database.default.DBPrefix =
+
+# para uso do sqLite
+# database.default.database = ../writable/database.db
+# database.default.DBDriver = SQLite3
 # database.default.DBPrefix =
 
 # database.tests.hostname = localhost

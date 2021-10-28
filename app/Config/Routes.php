@@ -21,7 +21,7 @@ $routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
-$routes->setAutoRoute(true);
+$routes->setAutoRoute(false);
 
 /*
  * --------------------------------------------------------------------
@@ -32,6 +32,18 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
+
+$routes->group('users', ['filter' => 'authFilter'], function ($routes) {
+    $routes->get('/', 'Users::index');
+    $routes->get('(:num)', 'Users::view/$1');
+    $routes->post('', 'Users::create');
+    $routes->put('(:num)', 'Users::save/$1');
+    $routes->delete('(:num)', 'Users::remove/$1');
+});
+
+$routes->group('zipcode', ['filter' => 'authFilter'], function ($routes) {
+    $routes->get('(:any)', 'Zipcode::view/$1');
+});
 
 /*
  * --------------------------------------------------------------------

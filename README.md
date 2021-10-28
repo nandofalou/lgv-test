@@ -1,63 +1,85 @@
-# CodeIgniter 4 Application Starter
+# Teste prático de PHP
 
-## What is CodeIgniter?
+## [LojaVirtual.com.br](https://www.lojavirtual.com.br/) - Teste prático de PHP
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](http://codeigniter.com).
+Este teste foi desenvolvido com o framework Codeigniter 4.1.4
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+## Como executar
 
-More information about the plans for version 4 can be found in [the announcement](http://forum.codeigniter.com/thread-62615.html) on the forums.
+O Codeigniter 4 necessita da extensão php-intl e php-mbstring. Verificar se está instalado.
 
-The user guide corresponding to this version of the framework can be found
-[here](https://codeigniter4.github.io/userguide/).
+Passos
+- baixe o repositório para um local válido (Linux Ubuntu /var/www/html/)
+- Copie env para.env e adapte para o seu aplicativo, especificamente as configurações de banco de dados.
+```
+Para MySQL:
+# para uso do MySQL
+database.default.hostname = localhost
+database.default.database = database_test
+database.default.username = root
+database.default.password = root
+database.default.DBDriver = MySQLi
+# database.default.DBPrefix =
 
-## Installation & updates
+Para sqLite
+# para uso do sqLite
+database.default.database = ../writable/database.db
+database.default.DBDriver = SQLite3
+# database.default.DBPrefix =
+```
+- Dê permissão de escrita no diretório writable
+- No diretório da aplicação, execute o servidor interno do codeigniter, digitando 
+```
+$ php spark serve
+```
+- ou configure o DocumentRoot Apache / Nginx para o diretório public do projeto (o mod-rewrite precisa estar ativo)
+- Abra o browser em http://localhost:8080 para executar as migrations
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+## Consumindo a API
 
-## Setup
+Como não foi informado o tipo de autenticação, adicionei a autenticação mais simples, Basic Auth.
+- username: lojavirtual
+- password: AAAAC3NzaC1lZDI1NTE5AAAAIAFGivCtTMXmFiPbd5GLHNChKn+MCVrvwjB5GK2APQti
+```
+ GET /users HTTP/1.1
+> Host: localhost:8080
+> User-Agent: insomnia/2021.4.1
+> Authorization: Basic bG9qYXZpcnR1YWw6QUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUFGR2l2Q3RUTVhtRmlQYmQ1R0xITkNoS24rTUNWcnZ3akI1R0syQVBRdGk=
+> Accept: */*
+```
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+## Testes
 
-## Important Change with index.php
+- GET http://localhost:8080/users
+- GET http://localhost:8080/users/1
+- POST http://localhost:8080/users
+```
+{
+	"name": "Fernando",
+	"email": "nando.falou@gmail.com",
+	"birthdate": "1980-01-01",
+	"cpf": "78585878787",
+	"phone": "7199999999",
+	"zipcode": "41830620"
+}
+```
+- PUT http://localhost:8080/users/1 
+```
+{
+	"name": "Fernando",
+	"email": "nando.falou@gmail.com",
+	"birthdate": "1980-01-01",
+	"cpf": "78585878787",
+	"phone": "7199999999",
+	"zipcode": "41830620"
+}
+```
+- DELETE http://localhost:8080/users/1
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+Extra
+- GET http://localhost:8080/zipcode/40330200
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
-
-**Please** read the user guide for a better explanation of how CI4 works!
-
-## Repository Management
-
-We use Github issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
-
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
-
-## Server Requirements
-
-PHP version 7.3 or higher is required, with the following extensions installed:
-
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
-
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php)
-- xml (enabled by default - don't turn it off)
+## + info
+- Os CEPs são persistidos em cada consulta, minimizando o uso da API do Via CEP
+- A API aceita os formatos json e multipart/form-data, informando o Content-Type
